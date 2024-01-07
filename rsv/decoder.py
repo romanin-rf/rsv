@@ -31,3 +31,16 @@ class Decoder:
                 row.clear()
                 value_start_index = self.io.tell()
         return rows
+    
+    def load_split(
+        self,
+        size: int=-1,
+        encoding: str='utf-8',
+        errors: str='strict'
+    ) -> List[List[Optional[str]]]:
+        return [
+            [
+                None if vd == b'\xFE' else vd.decode(encoding, errors) for vd in rd.split(b'\xFF')[:-1]
+            ] for rd in self.io.read(size).split(b'\xFD')[:-1]
+        ]
+
