@@ -28,7 +28,6 @@ class Decoder:
                 self.io.seek(value_start_index)
             elif data == b"\xFD":
                 rows.append(row.copy())
-                row = []
+                row.clear()
                 value_start_index = self.io.tell()
-                self.io.seek(value_start_index)
         return rows
