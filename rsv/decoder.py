@@ -1,4 +1,4 @@
-from typing import IO, Optional, List
+from typing import IO, Optional, List, Any, Generator
 
 # ! Main Encoder Class
 class Decoder:
@@ -7,12 +7,11 @@ class Decoder:
         assert io.seekable()
         self.io = io
     
-    def load(
+    def load_generator(
         self,
         encoding: str='utf-8',
         errors: str='strict'
-    ) -> List[List[Optional[str]]]:
-        rows: List[List[Optional[str]]] = []
+    ) -> Generator[List[Optional[str]], Any, None]:
         row: List[Optional[str]] = []
         value_start_index = self.io.tell()
         while len(data:=self.io.read(1)) > 0:
@@ -27,10 +26,16 @@ class Decoder:
                 value_start_index = self.io.tell() + 1
                 self.io.seek(value_start_index)
             elif data == b"\xFD":
-                rows.append(row.copy())
+                yield row.copy()
                 row.clear()
                 value_start_index = self.io.tell()
-        return rows
+    
+    def load(
+        self,
+        encoding: str='utf-8',
+        errors: str='strict'
+    ) -> List[List[Optional[str]]]:
+        return [row for row in self.load_generator(encoding, errors)]
     
     def load_split(
         self,
@@ -43,4 +48,3 @@ class Decoder:
                 None if vd == b'\xFE' else vd.decode(encoding, errors) for vd in rd.split(b'\xFF')[:-1]
             ] for rd in self.io.read(size).split(b'\xFD')[:-1]
         ]
-

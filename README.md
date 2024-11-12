@@ -27,4 +27,21 @@ with open("document.rsv", "rb") as file:
 with open("document.rsv", "rb") as file:
     data = rsv.load_split(file)
 
+# The third load method.
+# This is the most efficient possible method suitable for working with any arrays of any size.
+# Loads the file line by line, the use of `for` is required.
+with open("document.rsv", "rb") as file:
+    lines = []
+    for line in file.load_generator():
+        # And here you can do whatever you want...
+        lines.append(line)
+```
+
+## Notes
+It is also worth noting that no one forbids you to use the `Encoder`/`Decoder` directly:
+```python
+import rsv
+
+rsv_encoder = rsv.Encoder(open("document.rsv", "wb"))
+rsv_decoder = rsv.Decoder(open("document.rsv", "rb"))
 ```

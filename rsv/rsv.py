@@ -1,5 +1,5 @@
 from io import BytesIO
-from typing import IO, Optional, List
+from typing import IO, Optional, List, Any, Generator
 from .encoder import Encoder
 from .decoder import Decoder
 
@@ -37,6 +37,13 @@ def load_split(
     errors: str='strict'
 ) -> List[List[Optional[str]]]:
     return Decoder(io).load_split(size, encoding, errors)
+
+def load_generator(
+    io: IO[bytes],
+    encoding: str='utf-8',
+    errors: str='strict'
+) -> Generator[List[Optional[str]], Any, None]:
+    return Decoder(io).load_generator(encoding, errors)
 
 def loads(
     data: bytes,
