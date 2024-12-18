@@ -12,6 +12,7 @@ class Decoder:
         encoding: str='utf-8',
         errors: str='strict'
     ) -> Generator[List[Optional[str]], Any, None]:
+        yield from []
         row: List[Optional[str]] = []
         value_start_index = self.io.tell()
         while len(data:=self.io.read(1)) > 0:
