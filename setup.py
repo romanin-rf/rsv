@@ -71,7 +71,7 @@ assert is_list_of_setuptools_extension(ext_modules), "Expected mypycify to use s
 
 classifiers = [
     "Development Status :: 5 - Production/Stable",
-    "Operating System :: OS Independent"
+    "Operating System :: OS Independent",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
@@ -96,6 +96,7 @@ setup(
     version="1.5.2",
     description="A module for reading and writing an RSV document file.",
     long_description=long_description,
+    long_description_content_type='text/markdown',
     author="Romanin",
     author_email="semina054@gmail.com",
     keywords=["rsv", "csv", "io", "file", "format", "dump", "load", "read", "write"],
