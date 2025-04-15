@@ -32,8 +32,8 @@ def find_package_data(base, globs, root="rsv"):
     """Find all interesting data files, for setup(package_data=)
 
     Arguments:
-      root:  The directory to search in.
-      globs: A list of glob patterns to accept files.
+        root: The directory to search in.
+        globs: A list of glob patterns to accept files.
     """
 
     rv_dirs = [root for root, dirs, files in os.walk(base)]
@@ -56,9 +56,9 @@ everything = [os.path.join("rsv", x) for x in find_package_data("rsv", ["*.py"])
 
 from mypyc.build import mypycify
 
-opt_level = os.getenv("MYPYC_OPT_LEVEL", "3")
-debug_level = os.getenv("MYPYC_DEBUG_LEVEL", "1")
-force_multifile = os.getenv("MYPYC_MULTI_FILE", "") == "1"
+opt_level = os.getenv("MYPYC_OPT_LEVEL", '3')
+debug_level = os.getenv("MYPYC_DEBUG_LEVEL", '1')
+force_multifile = os.getenv("MYPYC_MULTI_FILE", '') == '1'
 ext_modules = mypycify(
     everything,  # + ["--config-file=mypy_bootstrap.ini"],
     opt_level=opt_level,
