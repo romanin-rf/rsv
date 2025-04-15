@@ -75,7 +75,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -93,7 +92,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="rsv",
-    version="1.5.2",
+    version="1.5.3",
     description="A module for reading and writing an RSV document file.",
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -117,7 +116,7 @@ setup(
         # nothing!
         "setuptools"
     ],
-    python_requires=">=3.8",
+    python_requires=">=3.9",
     include_package_data=True,
     project_urls={
         "Repository": "https://github.com/romanin-rf/rsv",

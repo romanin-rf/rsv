@@ -1,35 +1,37 @@
-[tool.poetry]
+[project]
 name = "rsv"
-version = "1.5.2"
+version = "1.5.3"
 description = "A module for reading and writing an RSV document file."
-authors = ["Romanin <semina054@gmail.com>"]
-repository = "https://github.com/romanin-rf/rsv"
-license = "MIT"
+authors = [
+    {name = "Romanin", email = "semina054@gmail.com"},
+    {name = "Matthew Martin", email = "matthewdeanmartin@gmail.com"}
+]
+license = {text = "MIT"}
 readme = "README.md"
 keywords = ["rsv", "csv", "io", "file", "format", "dump", "load", "read", "write"]
 classifiers = [
-    "Operating System :: OS Independent"
+    "Development Status :: 5 - Production/Stable",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development",
+    "Typing :: Typed"
 ]
-
-[tool.poetry.dependencies]
-python = ">=3.8"
-
-
-[tool.poetry.dev-dependencies]
-setuptools = "*"
-faker = "*"
-mypy = "*"
-
-# Can't use poetry and mypyc together
-#[build-system]
-#requires = ["poetry>=0.12"]
-## build-backend = "poetry.masonry.api"
+requires-python = ">=3.9"
+dependencies = [
+]
 
 [build-system]
 requires = [
-    "setuptools >= 40.6.2",
-    "wheel >= 0.30.0",
-    "mypy >= 1.7.1",
+    "setuptools>=40.6.2",
+    "wheel>=0.30.0",
+    "mypy>=1.7.1",
 ]
 build-backend = "setuptools.build_meta"
 
@@ -37,3 +39,8 @@ build-backend = "setuptools.build_meta"
 warn_return_any = true
 warn_unused_configs = true
 strict = true
+
+[tool.poetry.group.dev.dependencies]
+setuptools = "*"
+faker = "*"
+mypy = "*"
