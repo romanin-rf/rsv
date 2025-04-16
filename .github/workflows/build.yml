@@ -117,20 +117,53 @@ jobs:
       id-token: write
     steps:
       - name: Get packages
-        uses: actions/download-artifact@v4.1.8
+        uses: actions/download-artifact@v4
         with:
-          pattern: dist*
-          path: dist/
+          path: artifacts
           merge-multiple: true
-      - name: Get more packages
-        uses: actions/download-artifact@v4.1.8
-        with:
-          pattern: dist-*
-          path: ./wheelhouse/
-          merge-multiple: true
-      - name: Publish package distributions to PyPI
+
+      - name: Filter valid packages
+        run: |
+          pip install wheel
+          mkdir -p valid_packages
+          
+          find artifacts -name '*.whl' | while read whl; do
+            platform_valid=false
+            
+            if echo "$whl" | grep -q 'linux'; then
+              if wheel tags "$whl" | grep -q 'manylinux'; then
+                platform_valid=true
+              fi
+            elif echo "$whl" | grep -q 'macosx'; then
+              if wheel tags "$whl" | grep -q 'macosx'; then
+                platform_valid=true
+              fi
+            elif echo "$whl" | grep -q 'win_amd64'; then
+              if wheel tags "$whl" | grep -q 'win_amd64'; then
+                platform_valid=true
+              fi
+            fi
+
+            if $platform_valid; then
+              echo "Valid wheel: $whl"
+              cp "$whl" valid_packages/
+            else
+              echo "Removing invalid wheel: $whl"
+              rm "$whl"
+            fi
+          done
+
+          find artifacts -name '*.tar.gz' -exec cp {} valid_packages/ \;
+
+          echo "Valid packages to upload:"
+          ls -la valid_packages/
+
+      - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@v1.12.3
         with:
-          password: ${{ secrets.PYPI_TOKEN }}
+          packages-dir: valid_packages
           skip-existing: true
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+
     needs: [build_wheels, build_sdist_python_wheel]
