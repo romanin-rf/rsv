@@ -2,7 +2,6 @@
 build-frontend = "build"
 
 skip = [
-  "*-linux_x86_64",
   "*-manylinux_i686",
   "*-musllinux_i686",
   "*-win32",
