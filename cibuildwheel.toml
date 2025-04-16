@@ -1,5 +1,7 @@
 [tool.cibuildwheel]
 build-frontend = "build"
+manylinux-x86_64-image = "manylinux2014"
+manylinux-aarch64-image = "manylinux2014"
 
 skip = [
   "*-manylinux_i686",
